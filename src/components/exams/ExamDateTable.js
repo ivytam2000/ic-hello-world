@@ -1,4 +1,4 @@
-import './Form.css';
+import '../../subjects/Form.css';
 import React from "react"
 
 export function ExamDateTable({examDates, removeExamDate}){

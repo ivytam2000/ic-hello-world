@@ -26,7 +26,7 @@ export function TutorialTable({tutorials, removeTutorial}){
           <tr>
             <td><b>Subject</b></td>
             <td><b>Tutorial</b></td>
-            <td><b>No of Questions To Do</b></td>
+            <td><b>Questions</b></td>
             <td><b>Delete</b></td>
           </tr>
           {renderTableData()}

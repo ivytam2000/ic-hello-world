@@ -17,11 +17,13 @@ export function TutorialForm({addTutorial}) {
     setTutorial({ ...tutorial, id: uuidv4()})
     if (tutorial.subject.trim()) {
       addTutorial(tutorial);
+      // reset task input
+      setTutorial({...tutorial, title : ""})
     }
   }
 
 
-  function changeHandler(e) { 
+  function inputHandler(e) { 
     setTutorial({ ...tutorial, [e.target.name]: e.target.value});
   }
 
@@ -33,21 +35,25 @@ export function TutorialForm({addTutorial}) {
         name="subject"
         placeholder="Subject"
         value={tutorial.subject}
-        onChange={changeHandler}
+        onChange={inputHandler}
       />
+      </div>
+      <div className= "add-entry">
       <TextField
         type="text"
-        name="tutorial"
-        placeholder = "Tutorial Name"
+        name="tutorialName"
+        placeholder = "Tutorial"
         value={tutorial.tutorialName}
-        onChange={changeHandler}
+        onChange={inputHandler}
       />
+      </div>
+      <div className = "add-entry">
       <TextField
         type="number"
-        name="questions to do"
+        name="questions"
         placeholder = "Questions left"
         value={tutorial.questions}
-        onChange={changeHandler}
+        onChange={inputHandler}
       />
       <Button type="submit">Submit</Button>
       </div>

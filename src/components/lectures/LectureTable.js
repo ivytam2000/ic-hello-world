@@ -1,26 +1,15 @@
-import './Form.css';
+import '../../subjects/Form.css';
 import React from "react"
 
-export function LectureTable({lectures, toggleWatch, removeLecture}){
-
-  function printDuration(hours, mins) {
-    let res = "";
-    if (hours > 0) {
-      res += `${hours} hours `;
-    }
-    if (mins > 0) {
-      res += `${mins} minutes`;
-    }
-    return res;
-  }
+export function LectureTable({lecs, toggleWatch, removeLec}){
 
   function renderTableData() {
-    return examDates.map((examDate) => {
-      const { id, subject, topic, hours, mins, watched } = examDate
+    return lecs.map((lec) => {
+      const { id, subject, topic, hours, mins, watched } = lec
       return (
               <tr key={id}>
                 <td>
-                  <input type="checkbox" onClick={() => toggleComplete(id)}/>
+                  <input type="checkbox" onClick={() => toggleWatch(id)}/>
                 </td>
                 <td>{subject}</td>
                 <td>{topic}</td>
@@ -44,7 +33,6 @@ export function LectureTable({lectures, toggleWatch, removeLecture}){
             <td><b>Subject</b></td>
             <td><b>Topic</b></td>
             <td><b>Duration</b></td>
-            <td><b>Mins</b></td>
             <td><b>Delete</b></td>
           </tr>
           {renderTableData()}
@@ -53,6 +41,17 @@ export function LectureTable({lectures, toggleWatch, removeLecture}){
       </table>
     </div>
   )
+}
+
+export function printDuration(hours, mins) {
+  let res = "";
+  if (hours > 0) {
+    res += `${hours} hours `;
+  }
+  if (mins > 0) {
+    res += `${mins} minutes`;
+  }
+  return res;
 }
 
 	
