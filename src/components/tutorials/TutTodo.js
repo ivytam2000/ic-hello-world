@@ -1,12 +1,12 @@
 import React from "react"
 
-function Todo({todo, toggleCompleteToDo, removeTodo}){
+function TutTodo({tutTodo, toggleCompleteTutToDo, removeTutTodo}){
     function handleCheckboxClick(){
-        toggleCompleteToDo(todo.id)
+        toggleCompleteTutToDo(tutTodo.id)
     }
 
     function handleRemoveClick(){
-        removeTodo(todo.id)
+        removeTutTodo(tutTodo.id)
     }
 
     return(
@@ -15,12 +15,12 @@ function Todo({todo, toggleCompleteToDo, removeTodo}){
         <li
         style={{
             color: "blue",
-            textDecoration: todo.completed ? "line-through" : null,
+            textDecoration: tutTodo.completed ? "line-through" : null,
             listStyle: "none"
-        }}>{todo.task}</li>
+        }}>{tutTodo.task}</li>
         <button onClick={handleRemoveClick}>X</button>
         </div>
     );
 }
 
-export default Todo;
+export default TutTodo;

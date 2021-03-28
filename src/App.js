@@ -3,6 +3,8 @@ import Tabs from "./components/Tabs";
 import { useState, useEffect } from "react";
 import { SubjectForm } from './subjects/SubjectForm';
 import { SummaryPage } from './subjects/SummaryPage';
+import TutTodoForm from "./components/tutorials/TutTodoForm"
+import TutTodoList from "./components/tutorials/TutTodoList"
 import TodoForm from "./components/TodoForm"
 import TodoList from "./components/TodoList"
 import { ExamDateForm } from "./components/exams/ExamDateForm"
@@ -16,6 +18,7 @@ const LOCAL_STORAGE_KEY = "ic-hello-world-43-todos"
 function App() {
 
   const [todos,setTodos] = useState([])
+  const [tutTodos, setTutTodos] = useState([])
   const [lecs, setLecs] = useState([])
   const [examDates, setExamDates] = useState([])
   const [tutorials, setTutorial] = useState([])
@@ -75,6 +78,19 @@ function App() {
     toggleComplete(id, todos, setTodos);
   }
 
+  /** Tutorial ToDos */
+  function addTutTodo(tutTodo){
+    setTutTodos([tutTodo, ...tutTodos]);
+  }
+
+  function removeTutTodo(id){
+    setTutTodos(tutTodos.filter(tutTodo => tutTodo.id !== id));
+  }
+
+  function toggleCompleteTutToDo(id) {
+    toggleComplete(id, tutTodos, setTutTodos);
+  }
+
   /** Lectures */
 
   function addLec(lec) {
@@ -125,20 +141,20 @@ function App() {
       <TodoForm addTodo={addTodo}/> 
       <TodoList 
         todos={todos} 
-        toggleComplete={toggleComplete}
+        toggleCompleteToDo={toggleCompleteToDo}
         removeTodo={removeTodo}/></div>
       <div className={getClassName(1)}> 
       TUTORIALS TO DO: <p></p>
-      <TodoForm addTodo={addTodo}/> 
-      <TodoList 
-        todos={todos} 
-        toggleComplete={toggleComplete}
-        removeTodo={removeTodo}/></div>
+      <TutTodoForm addTutTodo={addTutTodo}/> 
+      <TutTodoList 
+        tutTodos={tutTodos} 
+        toggleCompleteTutToDo={toggleCompleteTutToDo}
+        removeTutTodo={removeTutTodo}/></div>
       <div className={getClassName(2)}> PAST YEARS TO DO: <p></p>
       <TodoForm addTodo={addTodo}/> 
       <TodoList 
         todos={todos} 
-        toggleComplete={toggleComplete}
+        toggleCompleteToDo={toggleCompleteToDo}
         removeTodo={removeTodo}/></div>
       <Tabs>
         {/* Exam Dates */}
