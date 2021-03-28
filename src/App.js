@@ -7,14 +7,16 @@ import TodoForm from "./components/TodoForm"
 import TodoList from "./components/TodoList"
 import { ExamDateForm } from "./subjects/ExamDateForm"
 import { ExamDateTable } from "./subjects/ExamDateTable"
+import {TutorialForm} from "./components/tutorials/TutorialForm"
+import {TutorialTable} from "./components/tutorials/TutorialTable"
 
 const LOCAL_STORAGE_KEY = "ic-hello-world-43-todos"
 function App() {
 
-  const[subjects, setSubjects] = useState([])
   const [todos,setTodos] = useState([])
   const [lecs, setLecs] = useState([])
   const [examDates, setExamDates] = useState([])
+  const [tutorials, setTutorial] = useState([])
   const [cat, setCat] = useState(-1);
 
   useEffect(()=>{
@@ -41,25 +43,26 @@ function App() {
     )
   }
 
+  function addTodo(todo){
+    setTodos([todo, ...todos]);
+  }
+
   function removeTodo(id){
     setTodos(todos.filter(todo => todo.id !== id))
   }
+
+  /** Lectures */
 
   function addLec(lec) {
     setLecs([lec, ...lecs])
   }
 
- function addTodo(todo){
-   setTodos([todo, ...todos]);
- }
- 
-  function addSubject(subject) {
-    setSubjects([subject, ...subjects]);
+  function removeLec(id) {
+    setLecs(lecs.filter(l => l.id !== id))
   }
 
-  function removeSubject(id) {
-    setSubjects(subjects.filter(subject => subject.id !== id));
-  }
+  
+  /** Exams */
 
   function addExamDate(examDate) {
     setExamDates([examDate, ...examDates])
@@ -74,6 +77,15 @@ function App() {
       return "form-content-active";
     }
     return "form-content";
+  }
+
+  /** Tutorials */
+  function addTutorial(tutorial){
+    setTutorial([tutorial, ...tutorials]);
+  }
+
+  function removeTutorial(id){
+    setTutorial(tutorials.filter(t=>t.id !==id));
   }
 
   return (
@@ -116,14 +128,17 @@ function App() {
         </div>
         {/* Lectures */}
         <div label="Lectures">
-          <LectureForm addLec={addLec}/> 
+          {/* <LectureForm addLec={addLec}/> 
           <LectureTable 
             lectures={lecs} 
             toggleComplete={toggleComplete}
-            removeLecture={removeLec} />
+            removeLecture={removeLec} /> */}
           {/*-- TODO: ADD LEC SUMMARY --*/}
         </div>
-        <div label = "Tutorial"></div>
+        <div label = "Tutorial">
+          <TutorialForm addTutorial={addTutorial} />
+          <TutorialTable tutorials={tutorials} removeTutorial={removeTutorial} />
+        </div>
       </Tabs>
      
       

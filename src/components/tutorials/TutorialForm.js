@@ -1,4 +1,4 @@
-import '../Form.css';
+import '../../subjects/Form.css';
 import { Button, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
@@ -8,13 +8,13 @@ export function TutorialForm({addTutorial}) {
   const [tutorial, setTutorial] = useState({
     id: "", 
     subject: "",
-    tutorial:"",
+    tutorialName:"",
     questions: ""
   });
 
   function handleSubmit(e) {
     e.preventDefault();
-    setExamDate({ ...tutorial, id: uuidv4()})
+    setTutorial({ ...tutorial, id: uuidv4()})
     if (tutorial.subject.trim()) {
       addTutorial(tutorial);
     }
@@ -38,12 +38,14 @@ export function TutorialForm({addTutorial}) {
       <TextField
         type="text"
         name="tutorial"
-        value={tutorial.tutorial}
+        placeholder = "Tutorial Name"
+        value={tutorial.tutorialName}
         onChange={changeHandler}
       />
       <TextField
         type="number"
         name="questions to do"
+        placeholder = "Questions left"
         value={tutorial.questions}
         onChange={changeHandler}
       />
