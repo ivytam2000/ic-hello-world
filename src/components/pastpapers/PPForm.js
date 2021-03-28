@@ -3,52 +3,52 @@ import { Button, TextField } from "@material-ui/core";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 
-export function TutorialForm({addTutorial}) {
+export function PPForm({addPP}) {
 
-  const [tutorial, setTutorial] = useState({
+  const [pp, setPP] = useState({
     id: "", 
     subject: "",
-    tutorialName:"",
+    ppName:"",
     questions: ""
   });
 
   function handleSubmit(e) {
     e.preventDefault();
-    setTutorial({ ...tutorial, id: uuidv4()})
-    if (tutorial.subject.trim()) {
-      addTutorial(tutorial);
+    setPP({ ...pp, id: uuidv4()})
+    if (pp.subject.trim()) {
+      addPP(pp);
       // reset task input
-      setTutorial({...tutorial, title : ""})
+      setPP({...pp, title : ""})
     }
   }
 
 
   function inputHandler(e) { 
-    setTutorial({ ...tutorial, [e.target.name]: e.target.value});
+    setPP({ ...pp, [e.target.name]: e.target.value});
   }
 
   return (
-    <form className="tutorial-form" onSubmit={handleSubmit}>
+    <form className="pp-form" onSubmit={handleSubmit}>
       <div className="add-entry">
       <TextField
         type="text"
         name="subject"
         placeholder="Subject"
-        value={tutorial.subject}
+        value={pp.subject}
         onChange={inputHandler}
       />
       <TextField
         type="text"
-        name="tutorialName"
-        placeholder = "Tutorial"
-        value={tutorial.tutorialName}
+        name="ppName"
+        placeholder = "Past Paper Year"
+        value={pp.ppName}
         onChange={inputHandler}
       />
       <TextField
-        type="number"
+        type="text"
         name="questions"
-        placeholder = "Questions left"
-        value={tutorial.questions}
+        placeholder = "Notes"
+        value={pp.questions}
         onChange={inputHandler}
       />
       <Button type="submit">Submit</Button>

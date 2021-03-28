@@ -5,12 +5,16 @@ import { SubjectForm } from './subjects/SubjectForm';
 import { SummaryPage } from './subjects/SummaryPage';
 import TutTodoForm from "./components/tutorials/TutTodoForm"
 import TutTodoList from "./components/tutorials/TutTodoList"
+import PPTodoForm from "./components/pastpapers/PPTodoForm"
+import PPTodoList from "./components/pastpapers/PPTodoList"
 import TodoForm from "./components/TodoForm"
 import TodoList from "./components/TodoList"
 import { ExamDateForm } from "./components/exams/ExamDateForm"
 import { ExamDateTable } from "./components/exams/ExamDateTable"
 import {TutorialForm} from "./components/tutorials/TutorialForm"
 import {TutorialTable} from "./components/tutorials/TutorialTable"
+import {PPForm} from "./components/pastpapers/PPForm"
+import {PPTable} from "./components/pastpapers/PPTable"
 import { LectureForm } from "./components/lectures/LectureForm"
 import { LectureTable, printDuration } from "./components/lectures/LectureTable"
 
@@ -19,9 +23,11 @@ function App() {
 
   const [todos,setTodos] = useState([])
   const [tutTodos, setTutTodos] = useState([])
+  const [ppTodos, setPPTodos] = useState([])
   const [lecs, setLecs] = useState([])
   const [examDates, setExamDates] = useState([])
   const [tutorials, setTutorial] = useState([])
+  const [pps, setPP] = useState([])
   const [cat, setCat] = useState(-1);
 
   useEffect(()=>{
@@ -91,6 +97,19 @@ function App() {
     toggleComplete(id, tutTodos, setTutTodos);
   }
 
+  /** Past Paper ToDos */
+  function addPPTodo(ppTodo){
+    setPPTodos([ppTodo, ...ppTodos]);
+  }
+
+  function removePPTodo(id){
+    setPPTodos(ppTodos.filter(ppTodo => ppTodo.id !== id));
+  }
+
+  function toggleCompletePPToDo(id) {
+    toggleComplete(id, ppTodos, setPPTodos);
+  }
+
   /** Lectures */
 
   function addLec(lec) {
@@ -127,9 +146,19 @@ function App() {
     setTutorial(tutorials.filter(t=>t.id !==id));
   }
 
+  /** Past papers */
+  function addPP(pp){
+    setPP([pp, ...pps]);
+  }
+
+  function removePP(id){
+    setPP(pps.filter(t=>t.id !==id));
+  }
+
   return (
     <div>
       <div className="header"><h1 className="h-text">Revision Progress Tracker</h1></div>
+      <div><h2> Focus of the Day</h2></div>
       {/*-- BUTTONS FOR FORMS --*/}
       <div className="form-buttons">
         <button onClick={() => setCat(0)}>+ Lecture</button>
@@ -151,11 +180,11 @@ function App() {
         toggleCompleteTutToDo={toggleCompleteTutToDo}
         removeTutTodo={removeTutTodo}/></div>
       <div className={getClassName(2)}> PAST YEARS TO DO: <p></p>
-      <TodoForm addTodo={addTodo}/> 
-      <TodoList 
-        todos={todos} 
-        toggleCompleteToDo={toggleCompleteToDo}
-        removeTodo={removeTodo}/></div>
+      <PPTodoForm addPPTodo={addPPTodo}/> 
+      <PPTodoList 
+        ppTodos={ppTodos} 
+        toggleCompletePPToDo={toggleCompletePPToDo}
+        removePPTodo={removePPTodo}/></div>
       <Tabs>
         {/* Exam Dates */}
         <div label="Exam Dates">
@@ -180,6 +209,11 @@ function App() {
         <div label = "Tutorial">
           <TutorialForm addTutorial={addTutorial} />
           <TutorialTable tutorials={tutorials} removeTutorial={removeTutorial} />
+        </div>
+        {/*Past Papers */}
+        <div label = "Past Papers">
+          <PPForm addPP={addPP} />
+          <PPTable pps={pps} removePP={removePP} />
         </div>
       </Tabs>
       
