@@ -5,13 +5,16 @@ import { SubjectForm } from './subjects/SubjectForm';
 import { SummaryPage } from './subjects/SummaryPage';
 import TodoForm from "./components/TodoForm"
 import TodoList from "./components/TodoList"
-import { ExamDateForm } from "./subjects/ExamDateForm"
-import { ExamDateTable } from "./subjects/ExamDateTable"
+import { ExamDateForm } from "./components/exams/ExamDateForm"
+import { ExamDateTable } from "./components/exams/ExamDateTable"
+
+import { LectureForm } from "./components/lectures/LectureForm"
+import { LectureTable, printDuration } from "./components/lectures/LectureTable"
 
 const LOCAL_STORAGE_KEY = "ic-hello-world-43-todos"
 function App() {
 
-  const[subjects, setSubjects] = useState([])
+  const [subjects, setSubjects] = useState([])
   const [todos,setTodos] = useState([])
   const [lecs, setLecs] = useState([])
   const [examDates, setExamDates] = useState([])
@@ -28,47 +31,6 @@ function App() {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(examDates))
   }, [examDates])
 
-  function toggleComplete(id){
-    setTodos(
-      todos.map(todo =>{
-        if(todo.id === id){
-          return{
-            ...todo,
-            completed: !todo.completed
-          }
-        }
-      })
-    )
-  }
-
-  function removeTodo(id){
-    setTodos(todos.filter(todo => todo.id !== id))
-  }
-
-  function addLec(lec) {
-    setLecs([lec, ...lecs])
-  }
-
- function addTodo(todo){
-   setTodos([todo, ...todos]);
- }
- 
-  function addSubject(subject) {
-    setSubjects([subject, ...subjects]);
-  }
-
-  function removeSubject(id) {
-    setSubjects(subjects.filter(subject => subject.id !== id));
-  }
-
-  function addExamDate(examDate) {
-    setExamDates([examDate, ...examDates])
-  }
-
-  function removeExamDate(id) {
-    setExamDates(examDates.filter(ed => ed.id !== id));
-  }
-
   const getClassName = (index) => {
     if (index === cat) {
       return "form-content-active";
@@ -76,12 +38,69 @@ function App() {
     return "form-content";
   }
 
+  /** Common Functions */
+  function toggleComplete(id, dataset, setData){
+    setData(
+      dataset.map(d =>{
+        if(d.id === id){
+          return{
+            ...d,
+            completed: !d.completed
+          }
+        }
+      })
+    )
+  }
+
+  function addData(data, dataSet, setData) {
+    setData([data, ...dataSet]);
+  }
+
+  function removeData(id, dataset, setData) {
+    setData(dataset.filter(d => d.id !== id));
+  }
+
+  /** ToDos */
+
+  function addTodo(todo){
+    setTodos([todo, ...todos]);
+  }
+
+  function removeTodo(id){
+    setTodos(todos.filter(todo => todo.id !== id));
+  }
+
+  function toggleCompleteToDo(id) {
+    toggleComplete(id, todos, setTodos);
+  }
+
+  /** Lectures */
+
+  function addLec(lec) {
+    addData(lec, lecs, setLecs);
+  }
+
+  function removeLec(id) {
+    removeData(id, lecs, setLecs);
+  }
+
+  function toggleWatch(id) {
+    toggleComplete(id, lecs, setLecs);
+  }
+
+  /** Exams */
+
+  function addExamDate(examDate) {
+    addData(examDate, examDates, setExamDates);
+  }
+
+  function removeExamDate(id) {
+    removeData(id, examDates, setExamDates);
+  }
+
   return (
     <div>
       <div className="header"><h1 className="h-text">Revision Progress Tracker</h1></div>
-      <div className="subject-add">
-        {/* <SubjectForm addSubject={addSubject} /> */}
-      </div>
       {/*-- BUTTONS FOR FORMS --*/}
       <div className="form-buttons">
         <button onClick={() => setCat(0)}>+ Lecture</button>
@@ -118,21 +137,13 @@ function App() {
         <div label="Lectures">
           <LectureForm addLec={addLec}/> 
           <LectureTable 
-            lectures={lecs} 
-            toggleComplete={toggleComplete}
-            removeLecture={removeLec} />
-          {/*-- TODO: ADD LEC SUMMARY --*/}
+            lecs={lecs} 
+            toggleWatch={toggleWatch}
+            removeLec={removeLec} />
         </div>
+        {/* Tutorials */}
         <div label = "Tutorial"></div>
       </Tabs>
-     
-      
-
-      {/*-- TABLE --*/}
-      {/* <SummaryPage lecs={[{id:1, lecTitle:"hi", time:22, completed:false}]} /> */}
-
-
-      {/*-- EXAM DATES --*/}
       
     </div>
   );

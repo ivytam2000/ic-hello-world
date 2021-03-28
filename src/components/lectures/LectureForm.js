@@ -1,3 +1,4 @@
+import { Button, TextField } from "@material-ui/core";
 import React, {useState} from "react"
 import { v4 as uuidv4 } from 'uuid'
 
@@ -6,9 +7,9 @@ export function LectureForm({addLec}){
       id:"",
       subject:"",
       topic:"",
-      hours:0,
-      mins:0,
-      watched:false
+      hours:"",
+      mins:"",
+      completed:false
   })
 
   function handleTaskInputChange(e){
@@ -17,7 +18,7 @@ export function LectureForm({addLec}){
 
   function handleSubmit(e){
       e.preventDefault();
-      if(lec.title.trim()){
+      if(lec.topic.trim()){
          addLec({...lec, id: uuidv4()})
          // reset task input
          setLec({...lec, title : ""})
