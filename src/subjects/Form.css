@@ -1,0 +1,32 @@
+
+.add-entry
+{
+    padding-left: 10%;
+    padding-right: 5%;
+}
+
+table, th, td
+{
+    margin-right: auto;
+    margin-left: auto;
+    padding: 10px;
+    border: 1px solid rgb(45, 76, 161);
+    border-collapse: collapse;
+    text-indent: 10%;
+    column-width: 150px;
+}
+
+.table-titles 
+{
+    color: rgb(45, 76, 161);
+    font-size: 25px;
+    padding-left: 10%;
+}
+
+.button 
+{
+    border: none;
+    color: black;
+    text-decoration: underline;
+    background-color: rgb(173, 173, 173);
+}
